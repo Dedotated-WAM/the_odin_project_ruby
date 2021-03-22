@@ -1,4 +1,4 @@
-# Takes an array of stock prices, one fo reach day. Return a pair of days representing the optimal day to buy and to sell.
+# Takes an array of stock prices, one for each day. Return a pair of days representing the optimal day to buy and to sell.
 class StockPicker
   def stock_picker(array)
     array.delete_at(array.index(array.min)) if array.min == array.last
