@@ -58,7 +58,7 @@ def save_thank_you_letter(id, form_letter)
 end
 
 def generate_emails
-  contents = CSV.open("event_attendees.csv", headers: true, header_converters: :symbol)
+  contents = CSV.open(FILENAME, headers: true, header_converters: :symbol)
   template_letter = File.read("form_letter.erb")
   erb_template = ERB.new(template_letter)
 
@@ -76,7 +76,7 @@ def generate_emails
 end
 
 def highest_registrations_hour
-  contents = CSV.open("event_attendees.csv", headers: true, header_converters: :symbol)
+  contents = CSV.open(FILENAME, headers: true, header_converters: :symbol)
   dates = []
   hours = []
 
@@ -95,7 +95,7 @@ end
 def highest_registrations_weekday
   weekdays = []
 
-  contents = CSV.open("event_attendees.csv", headers: true, header_converters: :symbol)
+  contents = CSV.open(FILENAME, headers: true, header_converters: :symbol)
   dates = []
 
   contents.each do |row|
@@ -111,8 +111,9 @@ def highest_registrations_weekday
   puts "The day with the most registrations is #{weekdays.tally.key(weekdays.tally.values.max)}."
 end
 
-unless File.exist?("event_attendees.csv")
-  puts "Error. File does not exist."
+FILENAME = "event_attendees.csv"
+unless File.exist?(FILENAME)
+  puts "Error. Filename: \"#{filename}\" does not exist."
   return
 end
 
