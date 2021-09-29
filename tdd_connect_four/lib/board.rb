@@ -9,13 +9,13 @@ module ConnectFour
     def default_grid
       rows = 6
       columns = 7
-      Array.new(columns) { Array.new(rows, '_') }
+      Array.new(columns) { Array.new(rows, "_") }
     end
 
     def display_grid(empty_space_symbol = ConnectFour::WHITE_CIRCLE)
-      puts '~ Connect Four ~'
-      puts ' 1 2 3 4 5 6 7'
-      result = @grid.map { |arr| arr.map { |el| el == '_' ? empty_space_symbol : el } }
+      puts "~ Connect Four ~"
+      puts " 1 2 3 4 5 6 7"
+      result = @grid.map { |arr| arr.map { |el| el == "_" ? empty_space_symbol : el } }
       result.transpose.each { |arr| puts arr.join }
     end
 
@@ -36,7 +36,7 @@ module ConnectFour
     # rubocop: enable all
 
     def place_symbol(current_move, current_player)
-      target = grid[current_move].index { |space| space != '_' }
+      target = grid[current_move].index { |space| space != "_" }
 
       if target.nil?
         grid[current_move][-1] = current_player.symbol
@@ -46,7 +46,7 @@ module ConnectFour
     end
 
     def column_full?(column_num)
-      return true if grid[column_num].none? { |element| element == '_' }
+      return true if grid[column_num].none? { |element| element == "_" }
 
       false
     end
@@ -54,12 +54,12 @@ module ConnectFour
     def winner?
       win = false
       grid.each do |col|
-        column = col.join('')
+        column = col.join("")
         win = true if column.match(/#{RED_CIRCLE * 4}/) || column.match(/#{BLACK_CIRCLE * 4}/)
       end
 
       grid.transpose.each do |r|
-        row = r.join('')
+        row = r.join("")
         win = true if row.match(/#{RED_CIRCLE * 4}/) || row.match(/#{BLACK_CIRCLE * 4}/)
       end
 
@@ -68,7 +68,7 @@ module ConnectFour
         diag.each do |r, c|
           result << grid[r][c]
         end
-        result = result.join('')
+        result = result.join("")
         win = true if result.match(/#{RED_CIRCLE * 4}/) || result.match(/#{BLACK_CIRCLE * 4}/)
       end
       win
@@ -87,7 +87,7 @@ module ConnectFour
       end
 
       left_to_right_diagonals = []
-      ((grid[0].size - 1)..0).step(-1).each do |c|
+      (grid[0].size - 1).downto(0).each do |c|
         temp = []
         (0..grid.size - 1).each do |r|
           temp << [r, c]
